@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Gong</title>
+  <style>
+    #gong {
+      width: 100%;
+      height: 100vh;
+      background-image: url(gong.png);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      cursor: pointer;
+    }
+    #message {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 36px;
+      text-align: center;
+      color: orange;
+      animation: move-text 3s infinite alternate;
+    }
+    @keyframes move-text {
+      from {
+        transform: translateX(-50px);
+      }
+      to {
+        transform: translateX(50px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="gong"></div>
+  <div id="message">Bravo, nouvelle mission gagnée!!!</div>
+
+  <audio id="bellSound" src="Gong-deep.wav"></audio>
+
+  <script>
+    const gong = document.querySelector("#gong");
+    const message = document.querySelector("#message");
+    const bellSound = document.querySelector("#bellSound");
+
+    gong.addEventListener("click", () => {
+      bellSound.currentTime = 0;
+      bellSound.play();
+      message.style.display = "block";
+      setTimeout(() => {
+        message.style.display = "none";
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
