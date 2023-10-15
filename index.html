@@ -1,32 +1,79 @@
 <!DOCTYPE html>
-<html>
-<head>
+<!-- saved from url=(0091)file:///C:/Users/montagne/OneDrive%20-%20Eurogroup%20Company/Bureau/test%20cartes/main.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
     <title>Card Game</title>
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
+        body {
+            background-color: #092b4d; /* Dark neutral blue background */
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+padding: 10px;
         }
 
-        #start-screen, #game-screen, #end-screen {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
+        #start-button, #restart-button {
+            background-color: #3498db; /* Button color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #start-button:hover, #restart-button:hover {
+            background-color: #2980b9; /* Button color on hover */
+        }
+
+        #game-screen {
+            display: none;
+        }
+
+        #card-container {
+            position: relative;
+            width: 100%;
+            max-width: 3000px;  Set a maximum width for card container */
+            margin: 0 auto;
+        }
+
+        #card {
+            width: 100%;
+            height: auto; /* Ensure card image resizes proportionally */
+        }
+
+        #end-screen {
+            display: none;
+        }
+
+        #time-display {
+            font-size: 40px; /* Larger font size */
+            color: #f1c40f; /* Different color for the timer */
+        }
+
+        /* Responsive styles for smaller screens */
+        @media (max-width: 3000px) {
+            #card-container {
+                max-width: 100%; /* Full-width for smaller screens */
+            }
         }
     </style>
 </head>
 <body>
-    <div id="start-screen">
+    <div id="start-screen" style="display: block;">
         <button id="start-button">Start Game</button>
     </div>
     <div id="game-screen" style="display: none;">
-        <img id="card" src="" alt="Card Image">
+        <div id="card-container">
+            <img id="card" src="./main 2_files/10_of_spades.png" alt="Card Image">
+        </div>
     </div>
     <div id="end-screen" style="display: none;">
-        <p id="time-message">Time Elapsed: <span id="time-display">0 seconds</span></p>
-        <button id="restart-button">Restart Game</button>
+        <p id="time-message">Temps total: <span id="time-display">355.81 seconds</span></p>
+        <button id="restart-button">Recommencer</button>
     </div>
     <script>
         // JavaScript code here
@@ -35,6 +82,7 @@
         const endScreen = document.getElementById("end-screen");
         const startButton = document.getElementById("start-button");
         const restartButton = document.getElementById("restart-button");
+        const cardContainer = document.getElementById("card-container");
         const image = document.getElementById("card");
         const timeDisplay = document.getElementById("time-display");
 
@@ -46,7 +94,7 @@
 
         // Define a list of image filenames manually
         const imageFilenames = [
-            "10_of_clubs.png", "10_of_diamonds.png", "10_of_hearts.png", "10_of_spades.png", "2_of_clubs.png", "2_of_diamonds.png", "2_of_hearts.png", "2_of_spades.png", "3_of_clubs.png", "3_of_diamonds.png", "3_of_hearts.png", "3_of_spades.png", "4_of_clubs.png", "4_of_diamonds.png", "4_of_hearts.png", "4_of_spades.png", "5_of_clubs.png", "5_of_diamonds.png", "5_of_hearts.png", "5_of_spades.png", "6_of_clubs.png", "6_of_diamonds.png", "6_of_hearts.png", "6_of_spades.png", "7_of_clubs.png", "7_of_diamonds.png", "7_of_hearts.png", "7_of_spades.png", "8_of_clubs.png", "8_of_diamonds.png", "8_of_hearts.png", "8_of_spades.png", "9_of_clubs.png", "9_of_diamonds.png", "9_of_hearts.png", "9_of_spades.png", "ace_of_clubs.png", "ace_of_diamonds.png", "ace_of_hearts.png", "ace_of_spades.png", "jack_of_clubs.png", "jack_of_diamonds.png", "jack_of_hearts.png", "jack_of_spades.png", "king_of_clubs.png", "king_of_diamonds.png", "king_of_hearts.png", "king_of_spades.png", "queen_of_clubs.png", "queen_of_diamonds.png", "queen_of_hearts.png", "queen_of_spades.png"
+            "10_of_clubs.png","10_of_diamonds.png","10_of_hearts.png","10_of_spades.png","2_of_clubs.png","2_of_diamonds.png","2_of_hearts.png","2_of_spades.png","3_of_clubs.png","3_of_diamonds.png","3_of_hearts.png","3_of_spades.png","4_of_clubs.png","4_of_diamonds.png","4_of_hearts.png","4_of_spades.png","5_of_clubs.png","5_of_diamonds.png","5_of_hearts.png","5_of_spades.png","6_of_clubs.png","6_of_diamonds.png","6_of_hearts.png","6_of_spades.png","7_of_clubs.png","7_of_diamonds.png","7_of_hearts.png","7_of_spades.png","8_of_clubs.png","8_of_diamonds.png","8_of_hearts.png","8_of_spades.png","9_of_clubs.png","9_of_diamonds.png","9_of_hearts.png","9_of_spades.png","ace_of_clubs.png","ace_of_diamonds.png","ace_of_hearts.png","ace_of_spades.png","jack_of_clubs.png","jack_of_diamonds.png","jack_of_hearts.png","jack_of_spades.png","king_of_clubs.png","king_of_diamonds.png","king_of_hearts.png","king_of_spades.png","queen_of_clubs.png","queen_of_diamonds.png","queen_of_hearts.png","queen_of_spades.png" // Add more image filenames here
         ];
 
         function shuffle(array) {
@@ -58,7 +106,7 @@
 
         function startGame() {
             startScreen.style.display = "none";
-            gameScreen.style.display = "flex"; // Use flex to center content vertically
+            gameScreen.style.display = "block";
             endScreen.style.display = "none";
             shuffle(imageFilenames);
             currentCard = 0;
@@ -76,15 +124,15 @@
                     gameStarted = false;
                     endTime = Date.now();
                     const elapsedTime = (endTime - startTime) / 1000;
-                    timeDisplay.textContent = elapsedTime.toFixed(2) + " seconds";
+                    timeDisplay.textContent = elapsedTime.toFixed(2) + " secondes";
                     gameScreen.style.display = "none"; // Hide the last card
-                    endScreen.style.display = "flex"; // Use flex to center content vertically
+                    endScreen.style.display = "block";
                 }
             }
         }
 
         function restartGame() {
-            startScreen.style.display = "flex"; // Use flex to center content vertically
+            startScreen.style.display = "block";
             gameScreen.style.display = "none";
             endScreen.style.display = "none";
         }
@@ -93,5 +141,6 @@
         image.addEventListener("click", handleImageClick);
         restartButton.addEventListener("click", restartGame);
     </script>
-</body>
-</html>
+
+
+</body></html>
